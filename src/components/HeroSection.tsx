@@ -1,10 +1,20 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, Eye, Heart, TrendingUp } from "lucide-react";
+import heroBackground from "@/assets/hero-background.jpg";
 
 const HeroSection = () => {
   return (
-    <section className="relative overflow-hidden bg-gradient-hero py-20 px-4">
+    <section 
+      className="relative overflow-hidden bg-gradient-hero py-20 px-4"
+      style={{
+        backgroundImage: `url(${heroBackground}), linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--accent) / 0.1))`,
+        backgroundSize: 'cover, auto',
+        backgroundPosition: 'center, center',
+        backgroundRepeat: 'no-repeat, no-repeat',
+        backgroundBlendMode: 'overlay, normal'
+      }}
+    >
       {/* Background decoration */}
       <div className="absolute inset-0 bg-gradient-transparency opacity-50" />
       
