@@ -1,12 +1,46 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import HeroSection from "@/components/HeroSection";
+import Navigation from "@/components/Navigation";
+import ImpactDashboard from "@/components/ImpactDashboard";
+import FoodbankAdoption from "@/components/FoodbankAdoption";
+import DonationFlow from "@/components/DonationFlow";
+import { Eye } from "lucide-react";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Navigation />
+      <main>
+        <HeroSection />
+        <div id="dashboard">
+          <ImpactDashboard />
+        </div>
+        <div id="adopt">
+          <FoodbankAdoption />
+        </div>
+        <div id="tracking">
+          <DonationFlow />
+        </div>
+      </main>
+      
+      {/* Footer */}
+      <footer className="bg-card border-t border-border py-12">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <div className="w-6 h-6 rounded bg-gradient-trust flex items-center justify-center">
+              <Eye className="w-4 h-4 text-primary-foreground" />
+            </div>
+            <span className="text-lg font-semibold text-foreground">ImpactTrace</span>
+          </div>
+          <p className="text-muted-foreground mb-4">
+            Transparent food donation tracking for maximum impact
+          </p>
+          <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
+            <a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-foreground transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-foreground transition-colors">Contact Us</a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
