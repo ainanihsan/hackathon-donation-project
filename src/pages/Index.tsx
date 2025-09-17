@@ -2,6 +2,7 @@ import HeroSection from "@/components/HeroSection";
 import Navigation from "@/components/Navigation";
 import ImpactDashboard from "@/components/ImpactDashboard";
 import FoodbankAdoption from "@/components/FoodbankAdoption";
+import FoodbankMap from "@/components/FoodbankMap";
 import DonationFlow from "@/components/DonationFlow";
 import { Eye } from "lucide-react";
 
@@ -16,6 +17,9 @@ const Index = () => {
         </div>
         <div id="adopt">
           <FoodbankAdoption />
+        </div>
+        <div id="map">
+          <FoodbankMap />
         </div>
         <div id="tracking">
           <DonationFlow />
