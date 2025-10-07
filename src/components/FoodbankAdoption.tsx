@@ -166,7 +166,12 @@ const FoodbankAdoption = () => {
             <p className="text-muted-foreground mb-6 max-w-md">
               Let our algorithm match you with a food bank based on your preferences and giving history.
             </p>
-            <Button variant="outline" size="lg" className="border-impact/30 hover:bg-impact/5">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="border-impact/30 hover:bg-impact/5"
+              onClick={() => window.location.href = '/find-charity'}
+            >
               Find My Perfect Match
             </Button>
           </Card>
