@@ -4,7 +4,6 @@ import ImpactDashboard from "@/components/ImpactDashboard";
 import FoodbankAdoption from "@/components/FoodbankAdoption";
 import FoodbankMap from "@/components/FoodbankMap";
 import DonationFlow from "@/components/DonationFlow";
-import CharitySearch from "@/components/CharitySearch";
 import { Eye } from "lucide-react";
 
 const Index = () => {
@@ -13,9 +12,6 @@ const Index = () => {
       <Navigation />
       <main>
         <HeroSection />
-        <div id="search">
-          <CharitySearch />
-        </div>
         <div id="dashboard">
           <ImpactDashboard />
         </div>
