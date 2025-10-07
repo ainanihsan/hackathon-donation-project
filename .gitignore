@@ -26,3 +26,7 @@ cleaned_charity_data.csv
 *.njsproj
 *.sln
 *.sw?
+
+# data
+charity_faiss.index
+charity_faiss_mapping.json
