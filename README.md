@@ -1,8 +1,13 @@
 # Welcome to your Lovable project
+## Contributors
+Tammy Sisodiya, Ainan Ihsan, Silke Nodwell, Nino Godoradze
 
 ## Project info
 
 **URL**: https://lovable.dev/projects/7ef69557-d6e8-415b-a1aa-6cddd06b655b
+
+## How to run project
+For the .env and the charity data set reach out to any of the contributors mentioned above.
 
 ## How can I edit this code?
 

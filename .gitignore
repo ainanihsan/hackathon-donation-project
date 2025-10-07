@@ -11,6 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+cleaned_charity_data.csv
+.temp
+.branches
 
 # Editor directories and files
 .vscode/*

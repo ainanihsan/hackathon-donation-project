@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Charity Recommender</title>
+</head>
+<body>
+    <h1>Charity Recommender</h1>
+    <ul id="charity-list"></ul>
+
+    <script>
+        fetch('/api/charities')
+            .then(response => response.json())
+            .then(data => {
+                const list = document.getElementById('charity-list');
+                data.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item['Charity Name']; // adjust column name to match CSV
+                    list.appendChild(li);
+                });
+            })
+            .catch(console.error);
+    </script>
+</body>
+</html>
