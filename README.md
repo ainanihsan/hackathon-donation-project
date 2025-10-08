@@ -84,15 +84,9 @@ Frontend:
 - Tailwind CSS
 
 Backend:
-
-APIs/Libraries:
+- Node.js
 - FastAPI
-
-Database:
 - Supabase
-
-Deployment tools:
--
 
 ## How can I deploy this project?
 
