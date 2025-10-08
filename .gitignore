@@ -30,3 +30,5 @@ cleaned_charity_data.csv
 # data
 charity_faiss.index
 charity_faiss_mapping.json
+
+__pycache__
