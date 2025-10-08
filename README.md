@@ -1,8 +1,9 @@
+# Nourish Together
+
 <p align="center">
   <img src="./src/assets/logo.png" alt="Logo" width="200"/>
 </p>
 
-# Nourish Together
 ## Contributors
 Tamana Sisodiya, Ainan Ihsan, Silke Nodwell, Nino Godoradze
 
@@ -25,6 +26,19 @@ To simplify giving while building trust between donors and charitable organizati
 
 **URL**: https://lovable.dev/projects/7ef69557-d6e8-415b-a1aa-6cddd06b655b
 
+<<<<<<< HEAD
+=======
+## How to run project
+### Run the API
+1. Create conda environment: 
+```
+conda env create -f environment.yml
+conda activate faiss-env
+```
+2. Run `python build_faiss_index.py` OR ask one of the contributors mentioned above for the charity_faiss.index and charity_faiss_mapping.json files. (`build_faiss_index.py` takes ~40 min to run on a CPU)
+3. Run `uvicorn charity_recommender.api:app --reload` to start the local API server
+4. Go to "http://127.0.0.1:8000/docs" to view the Swagger docs and try out the API
+>>>>>>> 445b9c9946808134f0b1565a80eff8c34fef94df
 
 ## How can I edit this code?
 

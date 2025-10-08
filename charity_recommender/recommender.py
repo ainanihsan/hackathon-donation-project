@@ -1,47 +1,29 @@
-import pandas as pd
-from sentence_transformers import SentenceTransformer
+
 import numpy as np
 import faiss
-from supabase import create_client, Client
-import os
+import json
+from sentence_transformers import SentenceTransformer
 
-# Supabase credentials
-SUPABASE_URL = os.getenv("VITE_SUPABASE_URL")
-SUPABASE_KEY = os.getenv("VITE_SUPABASE_PUBLISHABLE_KEY")
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+# Load FAISS index and mapping
+index_path = "charity_faiss.index"
+INDEX = faiss.read_index(index_path)
 
-# Load CSV
-df = pd.read_csv("./cleaned_charity_data.csv")
+mapping_path = "charity_faiss_mapping.json"
+with open(mapping_path, "r") as f:
+    MAPPING = json.load(f)
 
-# Clean Data
-df_clean = df[['organisation_number', 'charity_name', 'charity_activities']].dropna(subset=['charity_activities'])
+MODEL = SentenceTransformer('all-MiniLM-L6-v2')
 
-print("✅ Data loaded:", df_clean.shape)
-
-# Generate Embeddings
-model = SentenceTransformer('all-MiniLM-L6-v2')
-charity_activities_list = df_clean['charity_activities'].fillna('').tolist()
-charity_embeddings = model.encode(charity_activities_list, show_progress_bar=True)
-
-print("✅ Embeddings generated:", charity_embeddings.shape)
-
-# FAISS Index
-embedding_dimension = charity_embeddings.shape[1]
-index = faiss.IndexFlatL2(embedding_dimension)
-index.add(charity_embeddings)
-print("✅ FAISS index built:", index.ntotal)
-
-# Recommendation function
-def recommend_charities(query, num_recommendations=5):
-    query_embedding = model.encode(query)
+def recommend_charities(query, n_recommendations=5):
+    query_embedding = MODEL.encode(query)
     query_embedding = np.array([query_embedding])
-    distances, indices = index.search(query_embedding, num_recommendations)
+    distances, indices = INDEX.search(query_embedding, n_recommendations)
 
     recommendations = []
-    for i in range(num_recommendations):
+    for i in range(n_recommendations):
         charity_index = indices[0][i]
         distance = distances[0][i]
-        charity_info = df_clean.iloc[charity_index]
+        charity_info = MAPPING[charity_index]
         recommendations.append({
             'organisation_number': charity_info['organisation_number'],
             'charity_name': charity_info['charity_name'],
@@ -50,9 +32,5 @@ def recommend_charities(query, num_recommendations=5):
         })
     return recommendations
 
-# Example usage for debugging
-if __name__ == "__main__":
-    results = recommend_charities("charities for veterans", num_recommendations=5)
-    for r in results:
-        print(r)
-v
+# Example usage
+# recommend_charities("clothing and food", n_recommendations=5)
