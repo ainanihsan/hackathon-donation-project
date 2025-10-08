@@ -66,7 +66,7 @@ const CharityRecommender = () => {
             Find Your Perfect Charity Match
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Tell us what you care about, and we'll recommend charities that align with your values
+            Describe what you care about in your own words, and we'll find the perfect charities for you
           </p>
         </div>
 
@@ -79,13 +79,13 @@ const CharityRecommender = () => {
                 What cause matters to you?
               </CardTitle>
               <CardDescription>
-                Enter keywords like "veterans", "food security", "education", or "healthcare"
+                Describe in natural language what you'd like to support - just type as if you're talking to a friend
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex gap-4">
                 <Input
-                  placeholder="e.g., helping homeless people, animal welfare..."
+                  placeholder="e.g., I want to help feed families struggling with food insecurity..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={(e) => e.key === "Enter" && handleSearch()}
