@@ -1,6 +1,6 @@
 # Welcome to your Lovable project
 ## Contributors
-Tammy Sisodiya, Ainan Ihsan, Silke Nodwell, Nino Godoradze
+Tammy Sisodiya, Ainan Ihsan, Silke Nodwell, Nino Godoradze 
 
 ## Project info
 
