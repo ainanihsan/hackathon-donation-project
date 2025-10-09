@@ -57,7 +57,7 @@ const CharityRecommender = () => {
         "Content-Type": "application/json",
       },
       signal: controller.signal,
-      body: JSON.stringify({ searchQuery }), // <-- adjust key name if your FastAPI expects something else
+      body: JSON.stringify({ query: searchQuery }), // <-- FastAPI expects "query" field
       credentials: "include", // safe default if you later use cookies/sessions
     });
 

@@ -12,6 +12,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",   # Vite dev
         "http://localhost:3000",   # Next dev
+        "http://localhost:8080",   # Vite dev (alternative port)
         "https://your-prod-domain.com",
     ],
     allow_credentials=True,
