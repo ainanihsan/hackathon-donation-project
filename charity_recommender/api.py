@@ -14,6 +14,7 @@ app.add_middleware(
         "http://localhost:3000",   # Next dev
         "http://localhost:8080",   # Vite dev (alternative port)
         "https://your-prod-domain.com",
+        "https://*.railway.app",   # Railway deployments
     ],
     allow_credentials=True,
     allow_methods=["*"],
