@@ -6,15 +6,20 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Search, Heart, MapPin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-interface CharityResult {
+interface CharityRecommendation {
   organisation_number: string;
   charity_name: string;
   charity_activities: string;
 }
 
+// Vite style:
+const API_BASE =
+  import.meta.env.VITE_RECOMMENDER_URL ??
+  "http://localhost:8000"; // fallback for local dev
+
 const CharityRecommender = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [results, setResults] = useState<CharityResult[]>([]);
+  const [results, setResults] = useState<CharityRecommendation[]>([]);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
@@ -28,31 +33,77 @@ const CharityRecommender = () => {
       return;
     }
 
-    setLoading(true);
-    try {
-      // Placeholder for future recommender integration
+  setLoading(true);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
+  try {
+    if (!searchQuery?.trim()) {
       toast({
-        title: "Searching for charities...",
-        description: "Recommender integration coming soon!",
+        title: "Say something to search 🙂",
+        description: "Try describing the cause or type of charity you want.",
       });
-      
-      // Mock results for now
-      setResults([
-        {
-          organisation_number: "12345",
-          charity_name: "Example Charity",
-          charity_activities: "Supporting communities in need",
-        },
-      ]);
-    } catch (error) {
-      toast({
-        title: "Search failed",
-        description: "Please try again later",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
+      return;
     }
+
+    toast({
+      title: "Searching for charities...",
+      description: "Talking to the recommender…",
+    });
+
+    const res = await fetch(`${API_BASE}/recommend`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      signal: controller.signal,
+      body: JSON.stringify({ searchQuery }), // <-- adjust key name if your FastAPI expects something else
+      credentials: "include", // safe default if you later use cookies/sessions
+    });
+
+    if (!res.ok) {
+      const text = await res.text().catch(() => "");
+      throw new Error(`Recommender error (${res.status}): ${text || res.statusText}`);
+    }
+
+    // Be defensive about the shape the backend returns:
+    // - Either an array directly
+    // - Or { recommendations: [...] }
+    const payload = await res.json();
+    const items: any[] = Array.isArray(payload)
+      ? payload
+      : Array.isArray(payload?.recommendations)
+      ? payload.recommendations
+      : [];
+
+    const normalized: CharityRecommendation[] = items.map((it) => ({
+      organisation_number: String(it.organisation_number ?? it.org_number ?? it.id ?? ""),
+      charity_name: String(it.charity_name ?? it.name ?? "Unknown charity"),
+      charity_activities: String(it.charity_activities ?? it.activities ?? it.description ?? ""),
+    }));
+
+    if (!normalized.length) {
+      toast({
+        title: "No matches found",
+        description: "Try a broader description or different keywords.",
+      });
+    }
+
+    setResults(normalized);
+  } catch (error: any) {
+    const aborted = error?.name === "AbortError";
+    toast({
+      title: aborted ? "Request timed out" : "Search failed",
+      description: aborted
+        ? "The recommender took too long. Please try again."
+        : (error?.message ?? "Please try again later"),
+      variant: "destructive",
+    });
+  } finally {
+    clearTimeout(timeout);
+    setLoading(false);
+  }
+
   };
 
   return (
