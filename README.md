@@ -5,7 +5,7 @@
 </p>
 
 ## Contributors
-Tamana Sisodiya, Ainan Ihsan, Silke Nodwell, Nino Godoradze
+Tammy Sisodiya, Ainan Ihsan, Silke Nodwell, Nino Godoradze 
 
 ## Project info
 NourishTogether is a smart giving companion that helps people discover and support food-related charities and food banks - locally and globally - with transparency and purpose.
