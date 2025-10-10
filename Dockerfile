@@ -16,8 +16,9 @@ COPY start.sh /app/start.sh
 
 RUN chmod +x /app/start.sh
 
-# Install python runtime deps for downloader
-RUN pip3 install --no-cache-dir requests
+# Install python runtime deps for downloader via the Debian package to avoid PEP 668 errors
+RUN apt-get update && apt-get install -y --no-install-recommends python3-requests \
+    && rm -rf /var/lib/apt/lists/*
 
 # Keep the node environment available for any npm/yarn commands
 ENV PYTHONDONTWRITEBYTECODE=1 \
