@@ -25,10 +25,14 @@ class RecommendRequest(BaseModel):
 def read_root():
     return {"message": "Welcome to the Charity Recommender API!"}
 
-@app.post("/recommend")
+@app.post("/recommend", response_model=RecommendResponse)
 def recommend(request: RecommendRequest):
     try:
-        results = recommend_charities(request.query, request.num_recommendations)
-        return results
+        recommendations = recommend_charities(request.query)
+        return {"recommendations": recommendations}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+# To run: uvicorn charity_recommender.api:app --reload
+# To test: 
+# curl -X POST "http://localhost:8000/recommend" -H "Content-Type: application/json" -d '{"query": "clothing for homeless"}'

@@ -6,15 +6,20 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Search, Heart, MapPin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-interface CharityResult {
+interface CharityRecommendation {
   organisation_number: string;
   charity_name: string;
   charity_activities: string;
 }
 
+// Vite style:
+const API_BASE =
+  import.meta.env.VITE_RECOMMENDER_URL ??
+  "http://localhost:8000"; // fallback for local dev
+
 const CharityRecommender = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [results, setResults] = useState<CharityResult[]>([]);
+  const [results, setResults] = useState<CharityRecommendation[]>([]);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
@@ -78,9 +83,23 @@ const CharityRecommender = () => {
         description,
         variant: "destructive",
       });
-    } finally {
-      setLoading(false);
     }
+
+    setResults(normalized);
+  } catch (error: any) {
+    const aborted = error?.name === "AbortError";
+    toast({
+      title: aborted ? "Request timed out" : "Search failed",
+      description: aborted
+        ? "The recommender took too long. Please try again."
+        : (error?.message ?? "Please try again later"),
+      variant: "destructive",
+    });
+  } finally {
+    clearTimeout(timeout);
+    setLoading(false);
+  }
+
   };
 
   return (
