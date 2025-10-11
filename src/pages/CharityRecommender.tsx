@@ -15,7 +15,7 @@ interface CharityRecommendation {
 // Vite style:
 const API_BASE =
   import.meta.env.VITE_RECOMMENDER_URL ??
-  "http://localhost:8000"; // fallback for local dev
+  "https://recommender-fast-api-production.up.railway.app";
 
 const CharityRecommender = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -35,7 +35,7 @@ const CharityRecommender = () => {
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:8000/recommend", {
+      const response = await fetch(`${API_BASE}/recommend`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
