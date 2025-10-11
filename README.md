@@ -13,9 +13,13 @@ Tammy Sisodiya, Ainan Ihsan, Silke Nodwell, Nino Godoradze
 conda env create -f environment.yml
 conda activate faiss-env
 ```
-2. Run `python build_faiss_index.py` OR ask one of the contributors mentioned above for the charity_faiss.index and charity_faiss_mapping.json files. (`build_faiss_index.py` takes ~40 min to run on a CPU)
+2. FIRST TIME ONLY: Run `python build_faiss_index.py` OR ask one of the contributors mentioned above for the charity_faiss.index and charity_faiss_mapping.json files. (`build_faiss_index.py` takes ~40 min to run on a CPU)
 3. Run `uvicorn charity_recommender.api:app --reload` to start the local API server
-4. Go to "http://127.0.0.1:8000/docs" to view the Swagger docs and try out the API
+4. Go to "http://127.0.0.1:8000/docs" to view the Swagger docs and try out the API. Alternatively, run the following from the terminal:
+```
+curl -X POST "http://localhost:8000/recommend" -H "Content-Type: application/json" \
+-d '{"query": "helping homeless"}'
+```
 
 ## How can I edit this code?
 

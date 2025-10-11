@@ -7,7 +7,7 @@ app = FastAPI()
 
 class RecommendRequest(BaseModel):
     query: str
-    num_recommendations: int
+    num_recommendations: int = 3
 
 @app.get("/")
 def read_root():
