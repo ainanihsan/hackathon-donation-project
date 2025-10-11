@@ -64,9 +64,18 @@ const CharityRecommender = () => {
       }
     } catch (error: any) {
       setResults([]);
+      let description = error?.message || "Please try again later";
+      // Show a more descriptive message if the API is not accessible
+      if (
+        error?.name === "TypeError" &&
+        (description.includes("Failed to fetch") || description.includes("NetworkError"))
+      ) {
+        description =
+          "The recommendation service is not accessible. Please ensure the API server is running (e.g. with 'uvicorn charity_recommender.api:app --reload').";
+      }
       toast({
         title: "Search failed",
-        description: error?.message || "Please try again later",
+        description,
         variant: "destructive",
       });
     } finally {
@@ -104,7 +113,7 @@ const CharityRecommender = () => {
             <CardContent>
               <div className="flex gap-4">
                 <Input
-                  placeholder="e.g., I want to help feed families struggling with food insecurity..."
+                  placeholder="e.g. help feed families struggling with food insecurity"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={(e) => e.key === "Enter" && handleSearch()}
