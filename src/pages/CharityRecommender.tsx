@@ -30,24 +30,43 @@ const CharityRecommender = () => {
 
     setLoading(true);
     try {
-      // Placeholder for future recommender integration
-      toast({
-        title: "Searching for charities...",
-        description: "Recommender integration coming soon!",
-      });
-      
-      // Mock results for now
-      setResults([
-        {
-          organisation_number: "12345",
-          charity_name: "Example Charity",
-          charity_activities: "Supporting communities in need",
+      const response = await fetch("http://localhost:8000/recommend", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      ]);
-    } catch (error) {
+        body: JSON.stringify({
+          query: searchQuery,
+          num_recommendations: 3,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("API request failed");
+      }
+
+      const data = await response.json();
+      if (Array.isArray(data)) {
+        setResults(data);
+        if (data.length === 0) {
+          toast({
+            title: "No charities found",
+            description: "Try a different search term.",
+          });
+        }
+      } else {
+        setResults([]);
+        toast({
+          title: "Unexpected response",
+          description: "Please try again later.",
+          variant: "destructive",
+        });
+      }
+    } catch (error: any) {
+      setResults([]);
       toast({
         title: "Search failed",
-        description: "Please try again later",
+        description: error?.message || "Please try again later",
         variant: "destructive",
       });
     } finally {
