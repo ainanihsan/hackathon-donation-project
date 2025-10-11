@@ -1,21 +1,17 @@
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
 from charity_recommender.recommender import recommend_charities
 
+
 app = FastAPI()
 
-# Allow your front-end origin(s)
+# Allow all origins for development; restrict in production as needed
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",   # Vite dev
-        "http://localhost:3000",   # Next dev
-        "http://localhost:8080",   # Vite dev (alternative port)
-        "https://your-prod-domain.com",
-        "https://*.railway.app",   # Railway deployments
-    ],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -23,14 +19,7 @@ app.add_middleware(
 
 class RecommendRequest(BaseModel):
     query: str
-
-class Charity(BaseModel):
-    organisation_number: int
-    charity_name: str
-    charity_activities: str
-
-class RecommendResponse(BaseModel):
-    recommendations: List[Charity]
+    num_recommendations: int = 3
 
 @app.get("/")
 def read_root():
