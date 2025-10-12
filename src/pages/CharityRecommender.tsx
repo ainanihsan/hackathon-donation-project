@@ -118,7 +118,7 @@ const CharityRecommender = () => {
                 What cause matters to you?
               </CardTitle>
               <CardDescription>
-                Describe in natural language what you'd like to support - just type as if you're talking to a friend
+                Describe in natural language what you'd like to support
               </CardDescription>
             </CardHeader>
             <CardContent>
