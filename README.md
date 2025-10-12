@@ -1,7 +1,7 @@
 # Nourish Together
 
 <p align="center">
-  <img src="https://pasteboard.co/3fxzXrgxEErU.png" alt="Logo" width="200">
+  <img src="/Users/tamanasisodiya/Desktop/hackathon-nourishtogether/src/assets/logo.png" alt="Logo" width="200">
 </p>
 
 ## Contributors
