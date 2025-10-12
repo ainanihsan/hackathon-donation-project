@@ -20,13 +20,7 @@ const Navigation = () => {
           {/* Navigation items */}
           <div className="hidden md:flex items-center gap-6">
             <a href="#dashboard" className="text-foreground hover:text-primary transition-colors">
-              Dashboard
-            </a>
-            <a href="#adopt" className="text-foreground hover:text-primary transition-colors">
-              Adopt a Foodbank
-            </a>
-            <a href="#tracking" className="text-foreground hover:text-primary transition-colors">
-              Track Donations
+              Food Bank Dashboard
             </a>
           </div>
 
