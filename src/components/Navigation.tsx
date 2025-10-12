@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { Heart, Eye, Users, ArrowRight } from "lucide-react";
+import { Heart, Eye, Users, ArrowRight, Search } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
   return (
@@ -7,14 +8,14 @@ const Navigation = () => {
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-trust flex items-center justify-center">
               <Eye className="w-5 h-5 text-primary-foreground" />
             </div>
             <span className="text-xl font-bold text-foreground">
-              ImpactTrace
+              Nourish together
             </span>
-          </div>
+          </Link>
 
           {/* Navigation items */}
           <div className="hidden md:flex items-center gap-6">
@@ -32,12 +33,19 @@ const Navigation = () => {
             </a>
           </div>
 
-          {/* CTA Button */}
-          <Button className="bg-gradient-trust hover:shadow-trust transition-all duration-300">
-            <Heart className="w-4 h-4 mr-2" />
-            Start Giving
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
+          {/* CTA Buttons */}
+          <div className="flex items-center gap-3">
+            <Button asChild variant="outline" className="border-primary/30 hover:bg-primary/5">
+              <Link to="/find-charity">
+                <Search className="w-4 h-4 mr-2" />
+                Find Perfect Match
+              </Link>
+            </Button>
+            <Button className="bg-gradient-trust hover:shadow-trust transition-all duration-300">
+              <Heart className="w-4 h-4 mr-2" />
+              Start Giving
+            </Button>
+          </div>
         </div>
       </div>
     </nav>
