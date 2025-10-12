@@ -35,13 +35,13 @@ const Navigation = () => {
 
           {/* CTA Buttons */}
           <div className="flex items-center gap-3">
-            <Button asChild variant="outline" className="border-primary/30 hover:bg-primary/5">
+            <Button asChild className="bg-gradient-trust hover:shadow-trust transition-all duration-300">
               <Link to="/find-charity">
                 <Search className="w-4 h-4 mr-2" />
                 Find Perfect Match
               </Link>
             </Button>
-            <Button className="bg-gradient-trust hover:shadow-trust transition-all duration-300">
+            <Button variant="outline" className="border-primary/30 hover:bg-primary/5">
               <Heart className="w-4 h-4 mr-2" />
               Start Giving
             </Button>

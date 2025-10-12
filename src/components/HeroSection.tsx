@@ -41,7 +41,7 @@ const HeroSection = () => {
         </p>
 
         {/* CTA buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
           <Button size="lg" className="bg-gradient-trust hover:shadow-trust transition-all duration-300 border-0 text-lg px-8 py-6">
             Start Giving Transparently
             <ArrowRight className="ml-2 w-5 h-5" />
@@ -50,6 +50,24 @@ const HeroSection = () => {
             View Live Dashboard
           </Button>
         </div>
+
+        {/* Charity Recommender CTA Card */}
+        <Card className="max-w-2xl mx-auto p-8 bg-gradient-to-br from-primary/10 to-accent/10 backdrop-blur-sm border-primary/30 shadow-trust mb-16">
+          <div className="text-center">
+            <h3 className="text-2xl font-bold text-foreground mb-3">
+              Can't decide which food bank to adopt?
+            </h3>
+            <p className="text-muted-foreground mb-6">
+              Let our algorithm match you with a food bank based on your preferences and giving history.
+            </p>
+            <Button asChild size="lg" className="bg-gradient-trust hover:shadow-trust transition-all duration-300 text-lg px-8 py-4">
+              <a href="/find-charity">
+                <Eye className="w-5 h-5 mr-2" />
+                Find My Perfect Match
+              </a>
+            </Button>
+          </div>
+        </Card>
 
         {/* Impact preview cards */}
         <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
