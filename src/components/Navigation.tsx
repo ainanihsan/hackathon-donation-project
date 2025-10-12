@@ -38,10 +38,6 @@ const Navigation = () => {
                 Find Your Charity
               </Link>
             </Button>
-            <Button variant="outline" className="border-primary/30 hover:bg-primary/5">
-              <Heart className="w-4 h-4 mr-2" />
-              Start Giving
-            </Button>
           </div>
         </div>
       </div>
