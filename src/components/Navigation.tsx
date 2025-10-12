@@ -28,9 +28,6 @@ const Navigation = () => {
             <a href="#tracking" className="text-foreground hover:text-primary transition-colors">
               Track Donations
             </a>
-            <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">
-              About
-            </a>
           </div>
 
           {/* CTA Buttons */}
@@ -38,7 +35,7 @@ const Navigation = () => {
             <Button asChild className="bg-gradient-trust hover:shadow-trust transition-all duration-300">
               <Link to="/find-charity">
                 <Search className="w-4 h-4 mr-2" />
-                Find Perfect Match
+                Find Your Charity
               </Link>
             </Button>
             <Button variant="outline" className="border-primary/30 hover:bg-primary/5">
