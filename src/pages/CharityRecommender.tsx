@@ -35,6 +35,9 @@ const CharityRecommender = () => {
 
     setLoading(true);
     try {
+      console.log("Making request to:", `${API_BASE}/recommend`);
+      console.log("Request body:", { query: searchQuery, num_recommendations: 3 });
+      
       const response = await fetch(`${API_BASE}/recommend`, {
         method: "POST",
         headers: {
@@ -47,7 +50,9 @@ const CharityRecommender = () => {
       });
 
       if (!response.ok) {
-        throw new Error("API request failed");
+        const errorText = await response.text();
+        console.error("API Error Response:", errorText);
+        throw new Error(`API request failed: ${response.status} ${response.statusText} - ${errorText}`);
       }
 
       const data = await response.json();
@@ -75,6 +80,9 @@ const CharityRecommender = () => {
       }
     } catch (error: any) {
       setResults([]);
+      console.error("API Error:", error);
+      console.error("API URL:", `${API_BASE}/recommend`);
+      
       let description = error?.message || "Please try again later";
       // Show a more descriptive message if the API is not accessible
       if (
@@ -82,7 +90,7 @@ const CharityRecommender = () => {
         (description.includes("Failed to fetch") || description.includes("NetworkError"))
       ) {
         description =
-          "The recommendation service is not accessible. Please ensure the API server is running (e.g. with 'uvicorn charity_recommender.api:app --reload').";
+          `The recommendation service is not accessible at ${API_BASE}. API might be down or unreachable.`;
       }
       toast({
         title: "Search failed",
