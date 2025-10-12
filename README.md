@@ -1,9 +1,5 @@
 # Nourish Together
 
-<p align="center">
-  <img src="./src/assets/logo.png" alt="Logo" width="200"/>
-</p>
-
 ## Contributors
 Tammy Sisodiya, Ainan Ihsan, Silke Nodwell, Nino Godoradze 
 
