@@ -1,9 +1,10 @@
+// CharityRecommender.tsx
 import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, Heart, MapPin } from "lucide-react";
+import { Search, Heart, MapPin, Hourglass } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface CharityRecommendation {
@@ -15,7 +16,7 @@ interface CharityRecommendation {
 // Vite style:
 const API_BASE =
   import.meta.env.VITE_RECOMMENDER_URL ??
-  "http://localhost:8000"; // fallback for local dev
+  "https://recommender-fast-api-production.up.railway.app";
 
 const CharityRecommender = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -33,77 +34,72 @@ const CharityRecommender = () => {
       return;
     }
 
-  setLoading(true);
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 10000); // 10s timeout
-
-  try {
-    if (!searchQuery?.trim()) {
-      toast({
-        title: "Say something to search 🙂",
-        description: "Try describing the cause or type of charity you want.",
+    setLoading(true);
+    try {
+      console.log("Making request to:", `${API_BASE}/recommend`);
+      console.log("Request body:", { query: searchQuery, num_recommendations: 3 });
+      
+      const response = await fetch(`${API_BASE}/recommend`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: searchQuery,
+          num_recommendations: 3,
+        }),
       });
-      return;
-    }
 
-    toast({
-      title: "Searching for charities...",
-      description: "Talking to the recommender…",
-    });
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("API Error Response:", errorText);
+        throw new Error(`API request failed: ${response.status} ${response.statusText} - ${errorText}`);
+      }
 
-    const res = await fetch(`${API_BASE}/recommend`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      signal: controller.signal,
-      body: JSON.stringify({ query: searchQuery }), // <-- FastAPI expects "query" field
-      credentials: "include", // safe default if you later use cookies/sessions
-    });
+      const data = await response.json();
+      let recommendations = Array.isArray(data)
+        ? data
+        : Array.isArray(data.recommendations)
+        ? data.recommendations
+        : null;
 
-    if (!res.ok) {
-      const text = await res.text().catch(() => "");
-      throw new Error(`Recommender error (${res.status}): ${text || res.statusText}`);
-    }
-
-    // Be defensive about the shape the backend returns:
-    // - Either an array directly
-    // - Or { recommendations: [...] }
-    const payload = await res.json();
-    const items: any[] = Array.isArray(payload)
-      ? payload
-      : Array.isArray(payload?.recommendations)
-      ? payload.recommendations
-      : [];
-
-    const normalized: CharityRecommendation[] = items.map((it) => ({
-      organisation_number: String(it.organisation_number ?? it.org_number ?? it.id ?? ""),
-      charity_name: String(it.charity_name ?? it.name ?? "Unknown charity"),
-      charity_activities: String(it.charity_activities ?? it.activities ?? it.description ?? ""),
-    }));
-
-    if (!normalized.length) {
+      if (recommendations) {
+        setResults(recommendations);
+        if (recommendations.length === 0) {
+          toast({
+            title: "No charities found",
+            description: "Try a different search term.",
+          });
+        }
+      } else {
+        setResults([]);
+        toast({
+          title: "Unexpected response",
+          description: "Please try again later.",
+          variant: "destructive",
+        });
+      }
+    } catch (error: any) {
+      setResults([]);
+      console.error("API Error:", error);
+      console.error("API URL:", `${API_BASE}/recommend`);
+      
+      let description = error?.message || "Please try again later";
+      if (
+        error?.name === "TypeError" &&
+        (description.includes("Failed to fetch") || description.includes("NetworkError"))
+      ) {
+        description =
+          `The recommendation service is not accessible at ${API_BASE}. API might be down or unreachable.`;
+      }
       toast({
-        title: "No matches found",
-        description: "Try a broader description or different keywords.",
+        title: "Search failed",
+        description,
+        variant: "destructive",
       });
+    } finally {
+      setLoading(false);
     }
-
-    setResults(normalized);
-  } catch (error: any) {
-    const aborted = error?.name === "AbortError";
-    toast({
-      title: aborted ? "Request timed out" : "Search failed",
-      description: aborted
-        ? "The recommender took too long. Please try again."
-        : (error?.message ?? "Please try again later"),
-      variant: "destructive",
-    });
-  } finally {
-    clearTimeout(timeout);
-    setLoading(false);
-  }
-
   };
 
   return (
@@ -130,13 +126,13 @@ const CharityRecommender = () => {
                 What cause matters to you?
               </CardTitle>
               <CardDescription>
-                Describe in natural language what you'd like to support - just type as if you're talking to a friend
+                Describe in natural language what you'd like to support
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex gap-4">
                 <Input
-                  placeholder="e.g., I want to help feed families struggling with food insecurity..."
+                  placeholder="e.g. help feed families struggling with food insecurity"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={(e) => e.key === "Enter" && handleSearch()}
@@ -146,6 +142,14 @@ const CharityRecommender = () => {
                   {loading ? "Searching..." : "Search"}
                 </Button>
               </div>
+
+              {/* Simple loading notice */}
+              {loading && (
+                <div className="mt-3 text-sm text-muted-foreground flex items-center gap-2">
+                  <Hourglass className="w-4 h-4" />
+                  <span>Results may take around 10 seconds to load.</span>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>

@@ -9,6 +9,9 @@ import {
   Calendar,
   MessageCircle
 } from "lucide-react";
+import communityHopeKitchenImg from "@/assets/community-hope-kitchen.jpg";
+import riversideFoodPantryImg from "@/assets/riverside-food-pantry.jpg";
+import stMarysCommunityImg from "@/assets/st-marys-community.jpg";
 
 const FoodbankAdoption = () => {
   const foodbanks = [
@@ -23,7 +26,7 @@ const FoodbankAdoption = () => {
       description: "Serving families in the downtown area for over 15 years. Known for their warm community atmosphere and comprehensive support programs.",
       lastUpdate: "2 hours ago",
       supporters: 23,
-      image: "/api/placeholder/300/200"
+      image: communityHopeKitchenImg
     },
     {
       id: 2,
@@ -36,7 +39,7 @@ const FoodbankAdoption = () => {
       description: "Focuses on supporting young families and children. Provides not just food but educational resources and childcare support.",
       lastUpdate: "5 hours ago", 
       supporters: 18,
-      image: "/api/placeholder/300/200"
+      image: riversideFoodPantryImg
     },
     {
       id: 3,
@@ -49,7 +52,7 @@ const FoodbankAdoption = () => {
       description: "The largest food bank in our network, serving diverse communities with culturally appropriate foods and multilingual support.",
       lastUpdate: "1 day ago",
       supporters: 34,
-      image: "/api/placeholder/300/200"
+      image: stMarysCommunityImg
     }
   ];
 
@@ -72,7 +75,11 @@ const FoodbankAdoption = () => {
             <Card key={foodbank.id} className="overflow-hidden shadow-card hover:shadow-trust transition-all duration-300 bg-card/90 backdrop-blur-sm">
               {/* Food bank image */}
               <div className="relative">
-                <div className="h-48 bg-gradient-transparency" />
+                <img 
+                  src={foodbank.image} 
+                  alt={foodbank.name}
+                  className="h-48 w-full object-cover"
+                />
                 {foodbank.urgent && (
                   <Badge className="absolute top-4 right-4 bg-impact text-impact-foreground">
                     Urgent Need
@@ -157,25 +164,6 @@ const FoodbankAdoption = () => {
           ))}
         </div>
 
-        {/* Call to action */}
-        <div className="text-center mt-12">
-          <Card className="inline-block p-8 bg-card/80 backdrop-blur-sm shadow-impact">
-            <h3 className="text-2xl font-semibold text-card-foreground mb-4">
-              Can't decide which food bank to adopt?
-            </h3>
-            <p className="text-muted-foreground mb-6 max-w-md">
-              Let our algorithm match you with a food bank based on your preferences and giving history.
-            </p>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-impact/30 hover:bg-impact/5"
-              onClick={() => window.location.href = '/find-charity'}
-            >
-              Find My Perfect Match
-            </Button>
-          </Card>
-        </div>
       </div>
     </section>
   );

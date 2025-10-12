@@ -33,7 +33,7 @@ const Index = () => {
             <div className="w-6 h-6 rounded bg-gradient-trust flex items-center justify-center">
               <Eye className="w-4 h-4 text-primary-foreground" />
             </div>
-            <span className="text-lg font-semibold text-foreground">ImpactTrace</span>
+            <span className="text-lg font-semibold text-foreground">Nourish Together</span>
           </div>
           <p className="text-muted-foreground mb-4">
             Transparent food donation tracking for maximum impact
