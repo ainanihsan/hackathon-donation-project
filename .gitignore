@@ -27,8 +27,4 @@ cleaned_charity_data.csv
 *.sln
 *.sw?
 
-# data
-charity_faiss.index
-charity_faiss_mapping.json
-
 __pycache__
