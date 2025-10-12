@@ -20,7 +20,9 @@ To simplify giving while building trust between donors and charitable organizati
 
 - **Donation journey dashboard** - a personalised dashboard that tracks the impact and journey of a donation, offering donors the transparency and honesty they need to feel confident about where their money is going.
 
-**URL**: https://lovable.dev/projects/7ef69557-d6e8-415b-a1aa-6cddd06b655b
+**URL for Lovable Project**: https://lovable.dev/projects/7ef69557-d6e8-415b-a1aa-6cddd06b655b
+
+**URL for published website**: https://hackathon-donation-project.lovable.app/
 
 ## What technologies are used for this project?
 
