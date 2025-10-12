@@ -55,7 +55,7 @@ const HeroSection = () => {
         <Card className="max-w-2xl mx-auto p-8 bg-gradient-to-br from-primary/10 to-accent/10 backdrop-blur-sm border-primary/30 shadow-trust mb-16">
           <div className="text-center">
             <h3 className="text-2xl font-bold text-foreground mb-3">
-              Can't decide which food bank to adopt?
+              Looking to donate? Try out our charity recommender to find your perfect match
             </h3>
             <p className="text-muted-foreground mb-6">
               Let our algorithm match you with a food bank based on your preferences and giving history.
