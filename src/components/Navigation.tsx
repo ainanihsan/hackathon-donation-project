@@ -13,7 +13,7 @@ const Navigation = () => {
               <Eye className="w-5 h-5 text-primary-foreground" />
             </div>
             <span className="text-xl font-bold text-foreground">
-              Nourish together
+              Nourish Together
             </span>
           </Link>
 
