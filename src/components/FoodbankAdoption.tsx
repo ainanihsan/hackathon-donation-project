@@ -9,6 +9,7 @@ import {
   Calendar,
   MessageCircle
 } from "lucide-react";
+import communityHopeKitchenImg from "@/assets/community-hope-kitchen.jpg";
 
 const FoodbankAdoption = () => {
   const foodbanks = [
@@ -23,7 +24,7 @@ const FoodbankAdoption = () => {
       description: "Serving families in the downtown area for over 15 years. Known for their warm community atmosphere and comprehensive support programs.",
       lastUpdate: "2 hours ago",
       supporters: 23,
-      image: "/api/placeholder/300/200"
+      image: communityHopeKitchenImg
     },
     {
       id: 2,
@@ -72,7 +73,15 @@ const FoodbankAdoption = () => {
             <Card key={foodbank.id} className="overflow-hidden shadow-card hover:shadow-trust transition-all duration-300 bg-card/90 backdrop-blur-sm">
               {/* Food bank image */}
               <div className="relative">
-                <div className="h-48 bg-gradient-transparency" />
+                {typeof foodbank.image === 'string' ? (
+                  <div className="h-48 bg-gradient-transparency" />
+                ) : (
+                  <img 
+                    src={foodbank.image} 
+                    alt={foodbank.name}
+                    className="h-48 w-full object-cover"
+                  />
+                )}
                 {foodbank.urgent && (
                   <Badge className="absolute top-4 right-4 bg-impact text-impact-foreground">
                     Urgent Need
