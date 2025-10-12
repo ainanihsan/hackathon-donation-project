@@ -1,9 +1,10 @@
+// CharityRecommender.tsx
 import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, Heart, MapPin } from "lucide-react";
+import { Search, Heart, MapPin, Hourglass } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface CharityRecommendation {
@@ -84,7 +85,6 @@ const CharityRecommender = () => {
       console.error("API URL:", `${API_BASE}/recommend`);
       
       let description = error?.message || "Please try again later";
-      // Show a more descriptive message if the API is not accessible
       if (
         error?.name === "TypeError" &&
         (description.includes("Failed to fetch") || description.includes("NetworkError"))
@@ -142,6 +142,14 @@ const CharityRecommender = () => {
                   {loading ? "Searching..." : "Search"}
                 </Button>
               </div>
+
+              {/* Simple loading notice */}
+              {loading && (
+                <div className="mt-3 text-sm text-muted-foreground flex items-center gap-2">
+                  <Hourglass className="w-4 h-4" />
+                  <span>Results may take around 10 seconds to load.</span>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
