@@ -58,7 +58,7 @@ const HeroSection = () => {
               Looking to donate? Try out our charity recommender to find your perfect match
             </h3>
             <p className="text-muted-foreground mb-6">
-              Let our AI-powered algorithm match you with a charity based on your preferences and personality.
+              Let our AI-powered algorithm match you with a charity based on your preferences.
             </p>
             <Button asChild size="lg" className="bg-gradient-trust hover:shadow-trust transition-all duration-300 text-lg px-8 py-4">
               <a href="/find-charity">
