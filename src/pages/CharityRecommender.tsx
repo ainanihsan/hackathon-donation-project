@@ -51,9 +51,15 @@ const CharityRecommender = () => {
       }
 
       const data = await response.json();
-      if (Array.isArray(data)) {
-        setResults(data);
-        if (data.length === 0) {
+      let recommendations = Array.isArray(data)
+        ? data
+        : Array.isArray(data.recommendations)
+        ? data.recommendations
+        : null;
+
+      if (recommendations) {
+        setResults(recommendations);
+        if (recommendations.length === 0) {
           toast({
             title: "No charities found",
             description: "Try a different search term.",
